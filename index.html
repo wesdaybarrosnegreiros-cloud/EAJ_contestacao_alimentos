@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forja de Contestações - EAJ UNAERP</title>
+    <title>Forja de Documentos - EAJ UNAERP</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
@@ -68,7 +68,6 @@
             transition: background-color 0.8s ease, color 0.8s ease;
         }
         
-        /* CABEÇALHO UNAERP */
         .header-img {
             width: 100%;
             max-width: 250px;
@@ -262,7 +261,6 @@
 <body>
 
 <div class="container">
-    <!-- Cabeçalho Exato -->
     <img src="modelos/cabecalho.png" alt="Logo UNAERP" class="header-img">
     <div class="header-text">Escritório de Assistência Jurídica</div>
     
@@ -295,7 +293,7 @@
     </div>
     <div class="campo">
         <label>Ofício Defensoria (Nº):</label>
-        <input type="text" id="n_oficio_defensoria" placeholder="Ex: Ofício nº 50/2026 – UNAERP - Família">
+        <input type="text" id="n_oficio_defensoria" placeholder="Ex: 1234/2026">
     </div>
 
     <!-- SESSÃO 2: QUALIFICAÇÃO DO RÉU E AUTOR -->
@@ -416,13 +414,14 @@
     ☕ Muita calma nessa Força... Precisa de ajuda ou um café, padawan? 
 </div>
 
-<!-- Scripts Essenciais (Importados via CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.37.11/build/docxtemplater.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 
 <script>
-// --- FUNÇÕES E VARIÁVEIS GLOBAIS ---
+// --- URL DA SUA API GOOGLE SHEETS ---
+const URL_PLANILHA_JEDI = "https://script.google.com/macros/s/AKfycbzvfsh-NOIrdvAVnTrTR7q1JurdLpnaPBjsn8NxcKy2WEWewcf11DSZDaGNz5V8-zqPpg/exec";
+
 const audioForja = new Audio('modelos/som-jedi.mp3');
 
 function revelarSegredo() {
@@ -438,8 +437,8 @@ function revelarSegredo() {
 
 const TEXTO_BOTAO_PADRAO = "Forjar Petições";
 const TEXTO_NAO_PADAWAN = "não acho que você seja um padawan";
-const PADAWANS = ["joao", "miguel", "chueng", "filipe", "philip", "bruna", "pedro", "marco", "gabriel","Fabrizio"];
-const SITHS = ["Diogo", "Beatriz", "Hugo", "Heitor", "Luiz"];
+const PADAWANS = ["joao", "miguel", "chueng", "filipe", "philip", "bruna", "pedro", "marco", "gabriel"];
+const SITHS = ["darth vader", "vader", "palpatine", "kylo ren", "dooku", "maul"];
 
 function normalizar(texto) {
     if (!texto) return "";
@@ -523,8 +522,6 @@ function inicializarEasterEggCafe() {
     });
 }
 
-// O Erro ReferenceError ocorreu porque essa função não estava no escopo global
-// Para corrigir, vamos declarar a função assíncrona garantindo que ela funcione independente de CDN
 async function gerarDocumentos() {
     const btn = document.getElementById('btnGerar');
 
@@ -533,7 +530,6 @@ async function gerarDocumentos() {
         return;
     }
     
-    // Dispara o áudio
     audioForja.currentTime = 0;
     audioForja.play().catch(erro => console.log("Erro de Áudio:", erro));
 
@@ -559,7 +555,6 @@ async function gerarDocumentos() {
         return;
     }
 
-    // Função auxiliar para evitar erro caso um input não exista no HTML
     const getVal = id => {
         const el = document.getElementById(id);
         return el ? el.value : "";
@@ -603,7 +598,6 @@ async function gerarDocumentos() {
     const nomeBase = dados.nome_reu ? dados.nome_reu.split(" ")[0] : "Cliente";
     let sucessoTotal = true;
 
-    // Verificação de segurança da biblioteca do word
     const DocxConstructor = window.docxtemplater || window.Docxtemplater;
     if (typeof PizZip === 'undefined' || typeof DocxConstructor === 'undefined') {
         alert("Erro nas bibliotecas Jedi (PizZip/Docxtemplater não carregaram). Verifique a internet.");
@@ -645,7 +639,29 @@ async function gerarDocumentos() {
         }
     }
 
+    // --- AQUI ACONTECE A MÁGICA DO REGISTRO NA PLANILHA ---
     if (sucessoTotal) {
+        // Pega os nomes das peças que foram marcadas nos checkboxes
+        const nomesPecasMarcadas = arquivosSelecionados.map(arq => arq.id).join(", ");
+        
+        // Empacota os dados para enviar à sua planilha
+        const dadosRegistro = {
+            padawan: dados.nome_bad_boy || "Desconhecido",
+            processo: dados.numero || "Não informado",
+            acao: dados.tipo_de_acao || "Contestação",
+            pecas: nomesPecasMarcadas
+        };
+
+        // Envia silenciosamente (no-cors impede que trave a tela se o Google demorar)
+        fetch(URL_PLANILHA_JEDI, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dadosRegistro)
+        }).catch(err => console.log("Erro ao salvar no holocron (planilha):", err));
+
         alert("Documentos forjados com sucesso! O Conselho Jedi ainda precisa aprovar.");
     }
 
@@ -653,7 +669,6 @@ async function gerarDocumentos() {
     atualizarBotao(); 
 }
 
-// BIND EXPLÍCITO AO GLOBAL (Resolve o ReferenceError do botão onclick)
 window.gerarDocumentos = gerarDocumentos;
 window.verificarOrdem66 = verificarOrdem66;
 window.atualizarBotao = atualizarBotao;
