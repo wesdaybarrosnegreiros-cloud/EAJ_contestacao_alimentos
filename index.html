@@ -1,472 +1,670 @@
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forja de Documentos - EAJ UNAERP</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --unaerp-blue: #4054a5;
+            --unaerp-green: #8dc63f;
+            --bg-color: #f4f6f9;
+            --text-main: #333;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color); 
+            margin: 0; 
+            padding: 20px; 
+            color: var(--text-main);
+            transition: background-color 0.8s ease, color 0.8s ease;
+        }
+        
+        body.dark-mode {
+            background-color: #0b0c10;
+        }
+        body.dark-mode .container {
+            background-color: #1f2833;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            color: #c5c6c7;
+        }
+        body.dark-mode label {
+            color: #c5c6c7;
+        }
+        body.dark-mode h2, body.dark-mode .header-text {
+            color: #66fcf1;
+        }
+        body.dark-mode .padawan-greeting {
+            background: #111;
+            color: #45a29e;
+            border-left-color: #45a29e;
+        }
+        body.dark-mode input[type="text"], body.dark-mode textarea {
+            background-color: #0b0c10;
+            color: #fff;
+            border-color: #45a29e;
+        }
+        body.dark-mode .section-title {
+            color: #45a29e;
+            border-bottom-color: #45a29e;
+        }
+        body.dark-mode .header-img {
+            background-color: white; 
+            padding: 10px;
+            border-radius: 8px;
+        }
 
-<style>
-    :root {
-        --unaerp-blue: #4054a5;
-        --unaerp-green: #8dc63f;
-        --bg-color: #f4f6f9;
-        --text-main: #333;
+        .container { 
+            max-width: 750px; 
+            margin: 20px auto; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            transition: background-color 0.8s ease, color 0.8s ease;
+        }
+        
+        /* CABEÇALHO UNAERP */
+        .header-img {
+            width: 100%;
+            max-width: 250px;
+            display: block;
+            margin: 0 auto 15px auto;
+            object-fit: contain;
+            transition: background-color 0.8s ease;
+        }
+        .header-text {
+            text-align: center;
+            color: var(--unaerp-blue);
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            border-bottom: 3px solid var(--unaerp-green);
+            padding-bottom: 20px;
+            transition: color 0.8s ease;
+        }
+        
+        h2 { 
+            color: var(--text-main); 
+            text-align: center; 
+            margin-bottom: 5px;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: color 0.8s ease;
+        }
+        
+        .padawan-greeting {
+            text-align: center;
+            background: #eef2fa;
+            color: var(--unaerp-blue);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--unaerp-blue);
+            cursor: crosshair; 
+            transition: all 0.3s ease;
+        }
+        .padawan-greeting:hover {
+            transform: scale(1.02);
+        }
+        
+        .section-title {
+            font-size: 1.1em;
+            color: var(--unaerp-blue);
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            transition: color 0.8s ease, border-color 0.8s ease;
+        }
+
+        .campo { margin-bottom: 20px; }
+        label { 
+            display: block; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: #444; 
+            font-size: 0.95em;
+            transition: color 0.8s ease;
+        }
+        input[type="text"], textarea { 
+            width: 100%; 
+            padding: 12px 15px; 
+            border: 1.5px solid #d1d5db; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--unaerp-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(64, 84, 165, 0.15);
+        }
+        
+        .checkbox-group { 
+            display: flex; 
+            gap: 15px; 
+            margin: 25px 0; 
+            background: #f8f9fa; 
+            padding: 20px; 
+            border-radius: 8px; 
+            flex-wrap: wrap; 
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+            transition: background-color 0.8s ease;
+        }
+        body.dark-mode .checkbox-group {
+            background-color: #111;
+            border-color: #45a29e;
+        }
+        
+        .checkbox-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            color: var(--unaerp-blue);
+            transition: color 0.8s ease;
+        }
+        body.dark-mode .checkbox-item {
+            color: #66fcf1;
+        }
+        
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--unaerp-blue);
+        }
+        button { 
+            background: linear-gradient(135deg, var(--unaerp-blue), #2c3e80); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            font-size: 17px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: 15px; 
+            font-weight: 700; 
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(64, 84, 165, 0.3);
+        }
+        button:disabled { 
+            background: #9ca3af; 
+            cursor: not-allowed; 
+            transform: none;
+            box-shadow: none;
+        }
+        
+        button.sith-mode {
+            background: linear-gradient(135deg, #e50914, #8b0000);
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+        }
+        button.sith-mode:hover {
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.9);
+        }
+
+        .idle-toast {
+            position: fixed;
+            bottom: -100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--unaerp-blue), #2c3e80);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .idle-toast.show {
+            bottom: 30px;
+            animation: pulse-toast 2s infinite 1s;
+        }
+        body.dark-mode .idle-toast {
+            background: linear-gradient(135deg, #111, #1f2833);
+            color: #45a29e;
+            border: 1px solid #45a29e;
+            box-shadow: 0 0 15px rgba(69, 162, 158, 0.4);
+        }
+        @keyframes pulse-toast {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Cabeçalho Exato -->
+    <img src="modelos/cabecalho.png" alt="Logo UNAERP" class="header-img">
+    <div class="header-text">Escritório de Assistência Jurídica</div>
+    
+    <h2>Forja de Documentos - Contestação</h2>
+    
+    <div class="padawan-greeting" ondblclick="revelarSegredo()" title="Sente alguma perturbação na Força? Dê um duplo clique.">
+        Saudações, Bruna, Chueng Lee, Philip e Pedro... Petições forjar, vocês devem!<br>
+        <em>Que a Força esteja com vocês, jovens padawans.</em>
+    </div>
+    
+    <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" id="chk_contestacao" checked> Contestação</label>
+        <label class="checkbox-item"><input type="checkbox" id="chk_procuracao" checked> Procuração</label>
+        <label class="checkbox-item"><input type="checkbox" id="chk_gratuidade" checked> Gratuidade</label>
+    </div>
+
+    <!-- SESSÃO 1: DADOS GERAIS -->
+    <div class="section-title">Dados do Processo</div>
+    <div class="campo">
+        <label>Vara (ex: 1ª):</label>
+        <input type="text" id="vara" placeholder="Ex: 1ª" onkeyup="verificarOrdem66()">
+    </div>
+    <div class="campo">
+        <label>Número do Processo:</label>
+        <input type="text" id="numero" placeholder="0000000-00.0000.0.00.0000">
+    </div>
+    <div class="campo">
+        <label>Tipo de Ação:</label>
+        <input type="text" id="tipo_de_acao" placeholder="Ex: Ação de Guarda c/c Alimentos">
+    </div>
+    <div class="campo">
+        <label>Ofício Defensoria (Nº):</label>
+        <input type="text" id="n_oficio_defensoria" placeholder="Ex: 1234/2026">
+    </div>
+
+    <!-- SESSÃO 2: QUALIFICAÇÃO DO RÉU E AUTOR -->
+    <div class="section-title">Qualificação das Partes</div>
+    <div class="campo">
+        <label>Nome Completo do REQUERIDO (Seu Cliente):</label>
+        <input type="text" id="nome_reu" placeholder="Ex: João da Silva">
+    </div>
+    <div class="campo">
+        <label>Nacionalidade (Requerido):</label>
+        <input type="text" id="nacionalidade" value="brasileiro(a)">
+    </div>
+    <div class="campo">
+        <label>Estado Civil (Requerido):</label>
+        <input type="text" id="estado_civil" placeholder="Ex: divorciado">
+    </div>
+    <div class="campo">
+        <label>Profissão (Requerido):</label>
+        <input type="text" id="profissao" placeholder="Ex: autônomo">
+    </div>
+    <div class="campo">
+        <label>RG (Requerido):</label>
+        <input type="text" id="rg" placeholder="00.000.000-0">
+    </div>
+    <div class="campo">
+        <label>CPF (Requerido):</label>
+        <input type="text" id="cpf" placeholder="000.000.000-00">
+    </div>
+    <div class="campo">
+        <label>Endereço Completo (Requerido):</label>
+        <input type="text" id="endereco" placeholder="Rua, Número, Bairro, Cidade-UF, CEP">
+    </div>
+    <div class="campo">
+        <label>Nome Completo da AUTORA (Parte Contrária):</label>
+        <input type="text" id="nome_autor" placeholder="Ex: Maria das Graças">
+    </div>
+
+    <!-- SESSÃO 3: FILHOS E FATOS DA INICIAL -->
+    <div class="section-title">Resumo dos Fatos e Filhos</div>
+    <div class="campo">
+        <label>Nome dos Filhos:</label>
+        <input type="text" id="nomes_filhos" placeholder="Ex: Enzo e Valentina Silva">
+    </div>
+    <div class="campo">
+        <label>Idade dos Filhos:</label>
+        <input type="text" id="idades_filhos" placeholder="Ex: 8 e 5 anos">
+    </div>
+    <div class="campo">
+        <label>O que a Autora pretende? (Síntese):</label>
+        <textarea id="sintese_pretensoes_autor" placeholder="Ex: a fixação de alimentos em 30% dos rendimentos líquidos..."></textarea>
+    </div>
+    
+    <!-- SESSÃO 4: EMPREGO E SITUAÇÃO FINANCEIRA -->
+    <div class="section-title">Situação Financeira e Emprego do Réu</div>
+    <div class="campo">
+        <label>Data de Desligamento:</label>
+        <input type="text" id="data_desligamento" placeholder="Ex: 15 de janeiro de 2026">
+    </div>
+    <div class="campo">
+        <label>Último Empregador:</label>
+        <input type="text" id="ultimo_empregador" placeholder="Ex: Construtora X">
+    </div>
+    <div class="campo">
+        <label>Cargo do Último Emprego:</label>
+        <input type="text" id="cargo_ultimo_emprego" placeholder="Ex: pedreiro">
+    </div>
+    <div class="campo">
+        <label>Motivo do Desligamento:</label>
+        <input type="text" id="motivo_desligamento" placeholder="Ex: corte de gastos da empresa">
+    </div>
+    <div class="campo">
+        <label>Último Salário:</label>
+        <input type="text" id="ultimo_salario" placeholder="Ex: R$ 2.500,00">
+    </div>
+    <div class="campo">
+        <label>Renda Atual do Requerido:</label>
+        <input type="text" id="renda_atual_requerido" placeholder="Ex: vive de bicos esporádicos recebendo cerca de R$ 800,00 mensais">
+    </div>
+
+    <!-- SESSÃO 5: MÉRITO E PROPOSTAS -->
+    <div class="section-title">Teses de Defesa e Propostas</div>
+    <div class="campo">
+        <label>Impugnação às Alegações da Autora:</label>
+        <textarea id="impugnacao_alegacoes_autor" placeholder="Ex: A Autora alega sem provas que o Réu possui empresa oculta..."></textarea>
+    </div>
+    <div class="campo">
+        <label>Contribuições In Natura (O que o Réu já paga?):</label>
+        <textarea id="contribuicoes_in_natura" placeholder="Ex: compra material escolar, roupas e paga o plano de saúde"></textarea>
+    </div>
+    <div class="campo">
+        <label>Tese sobre a Guarda:</label>
+        <textarea id="tese_guarda_especifica" placeholder="Ex: a guarda compartilhada deve ser mantida pois atende o melhor interesse..."></textarea>
+    </div>
+    <div class="campo">
+        <label>Fundamento para o Estudo Social:</label>
+        <textarea id="fundamento_estudo_social" placeholder="Ex: a intensa animosidade entre as partes e as acusações recíprocas"></textarea>
+    </div>
+    
+    <div class="campo">
+        <label>Percentual de Rendimentos Proposto (Se empregado):</label>
+        <input type="text" id="percentual_rendimentos_proposto" placeholder="Ex: 20">
+    </div>
+    <div class="campo">
+        <label>Percentual do Salário Mínimo (Se desempregado):</label>
+        <input type="text" id="percentual_salario_minimo_proposto" placeholder="Ex: 30">
+    </div>
+
+    <div class="section-title">Assinatura</div>
+    <div class="campo">
+        <label>Padawan autor da arte:</label>
+        <input type="text" id="nome_bad_boy" placeholder="Nome do estagiário(a)" oninput="atualizarBotao()">
+    </div>
+
+    <button type="button" id="btnGerar" onclick="gerarDocumentos()">Forjar Petições</button>
+</div>
+
+<div id="idle-toast" class="idle-toast" onclick="limparTimerCafe()">
+    ☕ Muita calma nessa Força... Precisa de ajuda ou um café, padawan? 
+</div>
+
+<!-- Scripts Essenciais (Importados via CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.37.11/build/docxtemplater.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+<script>
+// --- FUNÇÕES E VARIÁVEIS GLOBAIS ---
+const audioForja = new Audio('modelos/som-jedi.mp3');
+
+function revelarSegredo() {
+    const frasesYoda = [
+        "Faça ou não faça. A tentativa não existe.",
+        "O medo é o caminho para o lado sombrio. E não protocolar no prazo também.",
+        "Passar o que aprendeu, você deve. Ajude seu colega padawan ao lado.",
+        "Um Jedi usa a Força para o conhecimento e a defesa. Nunca para bater no teclado."
+    ];
+    const fraseSorteada = frasesYoda[Math.floor(Math.random() * frasesYoda.length)];
+    alert("🥷 HOLOCRON SECRETO DESBLOQUEADO:\n\n" + fraseSorteada);
+}
+
+const TEXTO_BOTAO_PADRAO = "Forjar Petições";
+const TEXTO_NAO_PADAWAN = "não acho que você seja um padawan";
+const PADAWANS = ["joao", "miguel", "chueng", "filipe", "philip", "bruna", "pedro", "marco", "gabriel"];
+const SITHS = ["darth vader", "vader", "palpatine", "kylo ren", "dooku", "maul"];
+
+function normalizar(texto) {
+    if (!texto) return "";
+    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function nomeEhPadawan() {
+    const el = document.getElementById('nome_bad_boy');
+    if (!el) return true;
+    const nome = normalizar(el.value.trim());
+    if (nome === "") return true;
+    for (let i = 0; i < PADAWANS.length; i++) {
+        if (nome.includes(PADAWANS[i])) return true;
+    }
+    return false;
+}
+
+function atualizarBotao() {
+    const input = document.getElementById('nome_bad_boy');
+    const botao = document.getElementById('btnGerar');
+    if (!input || !botao) return;
+
+    const nome = normalizar(input.value.trim());
+    let ehSith = false;
+    for (let i = 0; i < SITHS.length; i++) {
+        if (nome.includes(SITHS[i])) {
+            ehSith = true; break;
+        }
     }
     
-    body { 
-        font-family: 'Inter', sans-serif; 
-        background-color: var(--bg-color); 
-        margin: 0; 
-        padding: 20px; 
-        color: var(--text-main);
-        transition: background-color 0.8s ease, color 0.8s ease;
+    if (ehSith) {
+        botao.classList.add('sith-mode');
+    } else {
+        botao.classList.remove('sith-mode');
     }
     
-    body.dark-mode {
-        background-color: #0b0c10;
+    if (nomeEhPadawan()) {
+        botao.innerText = TEXTO_BOTAO_PADRAO;
+    } else {
+        botao.innerText = TEXTO_NAO_PADAWAN;
     }
-    body.dark-mode .container {
-        background-color: #1f2833;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        color: #c5c6c7;
-    }
-    body.dark-mode label {
-        color: #c5c6c7;
-    }
-    body.dark-mode h2, body.dark-mode .header-text {
-        color: #66fcf1;
-    }
-    body.dark-mode .padawan-greeting {
-        background: #111;
-        color: #45a29e;
-        border-left-color: #45a29e;
-    }
-    body.dark-mode input[type="text"], body.dark-mode textarea {
-        background-color: #0b0c10;
-        color: #fff;
-        border-color: #45a29e;
-    }
-    body.dark-mode .section-title {
-        color: #45a29e;
-        border-bottom-color: #45a29e;
-    }
-    body.dark-mode .header-img {
-        background-color: white; 
-        padding: 10px;
-        border-radius: 8px;
-    }
+}
 
-    .container { 
-        max-width: 800px; 
-        margin: 20px auto; 
-        background: white; 
-        padding: 40px; 
-        border-radius: 12px; 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-        transition: background-color 0.8s ease, color 0.8s ease;
+function verificarOrdem66() {
+    const varaInput = document.getElementById('vara');
+    const vara = varaInput ? varaInput.value.trim() : "";
+    if (vara === "66" || vara === "66ª") {
+        document.body.classList.add('dark-mode');
+        setTimeout(() => {
+            alert("⚠️ ALERTA DO SENADO GALÁCTICO ⚠️\n\nExecutando Ordem 66...\n\nBrincadeira, padawan! Pode ir voltando ao trabalho.");
+        }, 500);
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+}
+
+let timerCafe;
+const TEMPO_ESPERA = 30000;
+
+function iniciarTimerCafe() {
+    clearTimeout(timerCafe);
+    const toast = document.getElementById('idle-toast');
+    if (toast) toast.classList.remove('show');
+    timerCafe = setTimeout(() => {
+        if (toast) toast.classList.add('show');
+    }, TEMPO_ESPERA);
+}
+
+function limparTimerCafe() {
+    clearTimeout(timerCafe);
+    const toast = document.getElementById('idle-toast');
+    if (toast) toast.classList.remove('show');
+}
+
+function inicializarEasterEggCafe() {
+    const campos = document.querySelectorAll('input[type="text"], textarea');
+    campos.forEach(campo => {
+        campo.addEventListener('focus', iniciarTimerCafe);
+        campo.addEventListener('input', iniciarTimerCafe);
+        campo.addEventListener('blur', limparTimerCafe);
+    });
+}
+
+// O Erro ReferenceError ocorreu porque essa função não estava no escopo global
+// Para corrigir, vamos declarar a função assíncrona garantindo que ela funcione independente de CDN
+async function gerarDocumentos() {
+    const btn = document.getElementById('btnGerar');
+
+    if (!nomeEhPadawan()) {
+        alert("🚧 PROGRAMA EM TESTE 🚧\n\nA geração de documentos não está liberada para este usuário.");
+        return;
     }
     
-    .header-img {
-        width: 100%;
-        max-width: 250px;
-        display: block;
-        margin: 0 auto 15px auto;
-        object-fit: contain;
-        transition: background-color 0.8s ease;
-    }
-    .header-text {
-        text-align: center;
-        color: var(--unaerp-blue);
-        font-size: 1.5em;
-        font-weight: 700;
-        margin-bottom: 25px;
-        border-bottom: 3px solid var(--unaerp-green);
-        padding-bottom: 20px;
-        transition: color 0.8s ease;
-    }
+    // Dispara o áudio
+    audioForja.currentTime = 0;
+    audioForja.play().catch(erro => console.log("Erro de Áudio:", erro));
+
+    btn.disabled = true;
+    btn.innerText = "Acessando os Arquivos Jedi, aguarde...";
+
+    const arquivosSelecionados = [];
     
-    h2 { 
-        color: var(--text-main); 
-        text-align: center; 
-        margin-bottom: 5px;
-        font-size: 1.2em;
-        font-weight: 600;
-        transition: color 0.8s ease;
+    if (document.getElementById('chk_contestacao') && document.getElementById('chk_contestacao').checked) {
+        arquivosSelecionados.push({ id: 'Contestacao', caminho: 'modelos/contestacao.docx' });
     }
-    
-    .padawan-greeting {
-        text-align: center;
-        background: #eef2fa;
-        color: var(--unaerp-blue);
-        padding: 15px;
-        border-radius: 8px;
-        font-size: 0.95em;
-        font-weight: 600;
-        margin-bottom: 30px;
-        border-left: 4px solid var(--unaerp-blue);
-        cursor: crosshair; 
-        transition: all 0.3s ease;
+    if (document.getElementById('chk_procuracao') && document.getElementById('chk_procuracao').checked) {
+        arquivosSelecionados.push({ id: 'Procuracao', caminho: 'modelos/procuracao.docx' });
     }
-    .padawan-greeting:hover {
-        transform: scale(1.02);
-    }
-    
-    .section-title {
-        font-size: 1.1em;
-        color: var(--unaerp-blue);
-        border-bottom: 2px solid #e5e7eb;
-        padding-bottom: 5px;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        font-weight: 700;
-        transition: color 0.8s ease, border-color 0.8s ease;
+    if (document.getElementById('chk_gratuidade') && document.getElementById('chk_gratuidade').checked) {
+        arquivosSelecionados.push({ id: 'Gratuidade', caminho: 'modelos/gratuidade.docx' });
     }
 
-    .campo { margin-bottom: 20px; }
-    label { 
-        display: block; 
-        font-weight: 600; 
-        margin-bottom: 8px; 
-        color: #444; 
-        font-size: 0.95em;
-        transition: color 0.8s ease;
-    }
-    input[type="text"], textarea { 
-        width: 100%; 
-        padding: 12px 15px; 
-        border: 1.5px solid #d1d5db; 
-        border-radius: 8px; 
-        box-sizing: border-box; 
-        font-size: 14px;
-        font-family: 'Inter', sans-serif;
-        transition: all 0.3s ease;
-    }
-    textarea {
-        resize: vertical;
-        min-height: 80px;
-        line-height: 1.4;
-    }
-    input[type="text"]:focus, textarea:focus {
-        border-color: var(--unaerp-blue);
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(64, 84, 165, 0.15);
-    }
-    
-    .checkbox-group { 
-        display: flex; 
-        gap: 15px; 
-        margin: 25px 0; 
-        background: #f8f9fa; 
-        padding: 20px; 
-        border-radius: 8px; 
-        flex-wrap: wrap; 
-        justify-content: center;
-        border: 1px solid #e5e7eb;
-        transition: background-color 0.8s ease;
-    }
-    body.dark-mode .checkbox-group {
-        background-color: #111;
-        border-color: #45a29e;
-    }
-    
-    .checkbox-item { 
-        display: flex; 
-        align-items: center; 
-        gap: 8px; 
-        font-weight: 600; 
-        cursor: pointer; 
-        color: var(--unaerp-blue);
-        transition: color 0.8s ease;
-    }
-    body.dark-mode .checkbox-item {
-        color: #66fcf1;
-    }
-    
-    input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        accent-color: var(--unaerp-blue);
-    }
-    button { 
-        background: linear-gradient(135deg, var(--unaerp-blue), #2c3e80); 
-        color: white; 
-        border: none; 
-        padding: 16px; 
-        font-size: 17px; 
-        border-radius: 8px; 
-        cursor: pointer; 
-        width: 100%; 
-        margin-top: 15px; 
-        font-weight: 700; 
-        font-family: 'Inter', sans-serif;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    button:hover { 
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(64, 84, 165, 0.3);
-    }
-    button:disabled { 
-        background: #9ca3af; 
-        cursor: not-allowed; 
-        transform: none;
-        box-shadow: none;
-    }
-    
-    button.sith-mode {
-        background: linear-gradient(135deg, #e50914, #8b0000);
-        box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
-    }
-    button.sith-mode:hover {
-        box-shadow: 0 0 25px rgba(229, 9, 20, 0.9);
+    if (arquivosSelecionados.length === 0) {
+        alert("Atenção, padawan: Selecione pelo menos um documento para gerar.");
+        btn.disabled = false;
+        atualizarBotao(); 
+        return;
     }
 
-    .nota-asterisco {
-        font-size: 0.85em;
-        color: #666;
-        margin-top: -10px;
-        margin-bottom: 20px;
-        font-style: italic;
+    // Função auxiliar para evitar erro caso um input não exista no HTML
+    const getVal = id => {
+        const el = document.getElementById(id);
+        return el ? el.value : "";
+    };
+
+    const dados = {
+        vara: getVal('vara'),
+        numero: getVal('numero'),
+        nome_reu: getVal('nome_reu').toUpperCase(),
+        nacionalidade: getVal('nacionalidade'),
+        estado_civil: getVal('estado_civil'),
+        profissao: getVal('profissao'),
+        rg: getVal('rg'),
+        cpf: getVal('cpf'),
+        endereco: getVal('endereco'),
+        tipo_de_acao: getVal('tipo_de_acao'),
+        nome_autor: getVal('nome_autor').toUpperCase(),
+        n_oficio_defensoria: getVal('n_oficio_defensoria'),
+
+        nomes_filhos: getVal('nomes_filhos'),
+        idades_filhos: getVal('idades_filhos'),
+        sintese_pretensoes_autor: getVal('sintese_pretensoes_autor'),
+        
+        data_desligamento: getVal('data_desligamento'),
+        ultimo_empregador: getVal('ultimo_empregador'),
+        cargo_ultimo_emprego: getVal('cargo_ultimo_emprego'),
+        motivo_desligamento: getVal('motivo_desligamento'),
+        ultimo_salario: getVal('ultimo_salario'),
+        renda_atual_requerido: getVal('renda_atual_requerido'),
+        
+        impugnacao_alegacoes_autor: getVal('impugnacao_alegacoes_autor'),
+        contribuicoes_in_natura: getVal('contribuicoes_in_natura'),
+        tese_guarda_especifica: getVal('tese_guarda_especifica'),
+        fundamento_estudo_social: getVal('fundamento_estudo_social'),
+        
+        percentual_rendimentos_proposto: getVal('percentual_rendimentos_proposto'),
+        percentual_salario_minimo_proposto: getVal('percentual_salario_minimo_proposto'),
+        nome_bad_boy: getVal('nome_bad_boy').toUpperCase()
+    };
+
+    const nomeBase = dados.nome_reu ? dados.nome_reu.split(" ")[0] : "Cliente";
+    let sucessoTotal = true;
+
+    // Verificação de segurança da biblioteca do word
+    const DocxConstructor = window.docxtemplater || window.Docxtemplater;
+    if (typeof PizZip === 'undefined' || typeof DocxConstructor === 'undefined') {
+        alert("Erro nas bibliotecas Jedi (PizZip/Docxtemplater não carregaram). Verifique a internet.");
+        btn.disabled = false;
+        atualizarBotao();
+        return;
     }
-    body.dark-mode .nota-asterisco { color: #888; }
 
-    .idle-toast {
-        position: fixed;
-        bottom: -100px;
-        right: 20px;
-        background: linear-gradient(135deg, var(--unaerp-blue), #2c3e80);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        z-index: 1000;
-        cursor: pointer;
+    for (const arquivo of arquivosSelecionados) {
+        try {
+            const resposta = await fetch(arquivo.caminho);
+            
+            if (!resposta.ok) {
+                throw new Error(`Arquivo não encontrado no servidor: ${arquivo.caminho}`);
+            }
+            
+            const conteudoBinario = await resposta.arrayBuffer();
+            const zip = new PizZip(conteudoBinario);
+            
+            const doc = new DocxConstructor(zip, {
+                paragraphLoop: true,
+                linebreaks: true,
+            });
+
+            doc.render(dados);
+
+            const blobDocumento = doc.getZip().generate({
+                type: "blob",
+                mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            });
+            
+            saveAs(blobDocumento, `${arquivo.id}_${nomeBase}.docx`);
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+        } catch (erro) {
+            console.error(erro);
+            alert(`Ocorreu um distúrbio na Força (${arquivo.id}): ${erro.message}`);
+            sucessoTotal = false;
+        }
     }
-    .idle-toast.show {
-        bottom: 30px;
-        animation: pulse-toast 2s infinite 1s;
+
+    if (sucessoTotal) {
+        alert("Documentos forjados com sucesso! O Conselho Jedi ainda precisa aprovar.");
     }
-    body.dark-mode .idle-toast {
-        background: linear-gradient(135deg, #111, #1f2833);
-        color: #45a29e;
-        border: 1px solid #45a29e;
-        box-shadow: 0 0 15px rgba(69, 162, 158, 0.4);
-    }
-    @keyframes pulse-toast {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.03); }
-        100% { transform: scale(1); }
-    }
-</style>
 
-<h2>Forja de Documentos - Contestação</h2>
+    btn.disabled = false;
+    atualizarBotao(); 
+}
 
-<div class="padawan-greeting" ondblclick="revelarSegredo()" title="Sente alguma perturbação na Força? Dê um duplo clique.">
-    Saudações, Bruna, Chueng Lee, Philip e Pedro... Contestações forjar, vocês devem!<br>
-    <em>Que a Força esteja com vocês, jovens padawans.</em>
-</div>
+// BIND EXPLÍCITO AO GLOBAL (Resolve o ReferenceError do botão onclick)
+window.gerarDocumentos = gerarDocumentos;
+window.verificarOrdem66 = verificarOrdem66;
+window.atualizarBotao = atualizarBotao;
+window.revelarSegredo = revelarSegredo;
+window.limparTimerCafe = limparTimerCafe;
 
-<div class="checkbox-group">
-    <label class="checkbox-item"><input type="checkbox" id="chk_contestacao" checked> Contestação</label>
-    <label class="checkbox-item"><input type="checkbox" id="chk_procuracao" checked> Procuração</label>
-    <label class="checkbox-item"><input type="checkbox" id="chk_gratuidade" checked> Gratuidade</label>
-</div>
+document.addEventListener('DOMContentLoaded', () => {
+    atualizarBotao();
+    inicializarEasterEggCafe();
+});
+</script>
 
-<div class="nota-asterisco">
-    * Campos marcados com asterisco serão inseridos especificamente na Contestação.
-</div>
-
-<div class="section-title">Dados do Processo e Defensoria *</div>
-
-<div class="campo">
-    <label>Vara de Família e Sucessões* (ex: 1):</label>
-    <input type="text" id="vara" placeholder="Ex: 1" onkeyup="verificarOrdem66()">
-</div>
-<div class="campo">
-    <label>Número do Processo*:</label>
-    <input type="text" id="numero" placeholder="Ex: 1000000-00.2026.8.26.0506">
-</div>
-<div class="campo">
-    <label>Ofício de Encaminhamento Defensoria nº*:</label>
-    <input type="text" id="n_oficio_defensoria" placeholder="Ex: 1234/2026">
-</div>
-<div class="campo">
-    <label>Tipo de Ação a que responde (ex: Ação de Alimentos com Guarda e Visitas)*:</label>
-    <input type="text" id="tipo_de_acao" placeholder="Ex: Ação de Modificação de Guarda c/c Exoneração e Fixação de Alimentos">
-</div>
-
-<div class="section-title">Qualificação da Parte Requerida (Nosso Cliente / Réu)</div>
-
-<div class="campo">
-    <label>Nome Completo do Requerido(a):</label>
-    <input type="text" id="nome_reu" placeholder="Ex: Carlos Alberto da Silva">
-</div>
-<div class="campo">
-    <label>Nacionalidade:</label>
-    <input type="text" id="nacionalidade" value="brasileiro(a)">
-</div>
-<div class="campo">
-    <label>Estado Civil:</label>
-    <input type="text" id="estado_civil" placeholder="Ex: solteiro(a)">
-</div>
-<div class="campo">
-    <label>Profissão:</label>
-    <input type="text" id="profissao" placeholder="Ex: desempregado(a)">
-</div>
-<div class="campo">
-    <label>RG:</label>
-    <input type="text" id="rg" placeholder="00.000.000-0">
-</div>
-<div class="campo">
-    <label>CPF:</label>
-    <input type="text" id="cpf" placeholder="000.000.000-00">
-</div>
-<div class="campo">
-    <label>Endereço Completo:</label>
-    <input type="text" id="endereco" placeholder="Ex: Rua das Flores, 123, Bairro Alto, Ribeirão Preto-SP">
-</div>
-
-<div class="section-title">Parte Autora e Filhos *</div>
-
-<div class="campo">
-    <label>Nome Completo da Parte Autora*:</label>
-    <input type="text" id="nome_autor" placeholder="Ex: Maria das Dores">
-</div>
-<div class="campo">
-    <label>Nome(s) do(s) Filho(s)*:</label>
-    <input type="text" id="nomes_filhos" placeholder="Ex: Joãozinho da Silva e Ana Clara da Silva">
-</div>
-<div class="campo">
-    <label>Idade(s) do(s) Filho(s)*:</label>
-    <input type="text" id="idades_filhos" placeholder="Ex: 5 anos e 8 anos">
-</div>
-
-<div class="section-title">Resumo e Síntese dos Fatos *</div>
-
-<div class="campo">
-    <label>Pretensão do Autor sobre Alimentos*:</label>
-    <input type="text" id="fixacao_alimentos" placeholder="Ex: fixação de alimentos no patamar de 50% do salário mínimo">
-</div>
-<div class="campo">
-    <label>Pretensão do Autor sobre Guarda*:</label>
-    <input type="text" id="fixacao_modificacao_guarda" placeholder="Ex: modificação da guarda para unilateral em favor da genitora">
-</div>
-<div class="campo">
-    <label>Pretensão do Autor sobre Visitas*:</label>
-    <input type="text" id="estipulacao_visitas" placeholder="Ex: regulamentação de visitas assistidas aos finais de semana">
-</div>
-<div class="campo">
-    <label>Síntese das Pretensões e Alegações da Inicial*:</label>
-    <textarea id="sintese_pretensoes_autor" placeholder="Ex: o Requerido possui renda elevada e não auxilia no sustento dos menores..."></textarea>
-</div>
-<div class="campo">
-    <label>Impugnação Direta às Alegações da Autora*:</label>
-    <textarea id="impugnacao_alegacoes_autor" placeholder="Ex: improcedem os argumentos de que o réu ostenta sinais de riqueza, visto que sobrevive de pequenos bicos..."></textarea>
-</div>
-
-<div class="section-title">Situação Financeira e Desemprego do Requerido *</div>
-
-<div class="campo">
-    <label>Data de Desligamento do Emprego*:</label>
-    <input type="text" id="data_desligamento" placeholder="Ex: 15 de janeiro de 2026">
-</div>
-<div class="campo">
-    <label>Último Empregador*:</label>
-    <input type="text" id="ultimo_empregador" placeholder="Ex: Empresa X Ltda">
-</div>
-<div class="campo">
-    <label>Cargo do Último Emprego*:</label>
-    <input type="text" id="cargo_ultimo_emprego" placeholder="Ex: auxiliar de serviços gerais">
-</div>
-<div class="campo">
-    <label>Motivo do Desligamento*:</label>
-    <input type="text" id="motivo_desligamento" placeholder="Ex: demissão sem justa causa em razão de corte de custos">
-</div>
-<div class="campo">
-    <label>Último Salário (R$)*:</label>
-    <input type="text" id="ultimo_salario" placeholder="Ex: 1.600,00">
-</div>
-<div class="campo">
-    <label>Situação de Renda Atual do Requerido*:</label>
-    <textarea id="renda_atual_requerido" placeholder="Ex: vem realizando trabalhos informais eventuais, obtendo renda média variável insuficiente..."></textarea>
-</div>
-<div class="campo">
-    <label>Documentos que comprovam o Desemprego*:</label>
-    <input type="text" id="docs_desemprego" placeholder="Ex: rescisão contratual e extrato de FGTS">
-</div>
-<div class="campo">
-    <label>Ações de Recolocação Profissional*:</label>
-    <input type="text" id="acoes_recolocacao" placeholder="Ex: tem distribuído currículos e cadastrado em agências de emprego">
-</div>
-
-<div class="section-title">Proposta de Alimentos e Réplica de Custos *</div>
-
-<div class="campo">
-    <label>Valor dos Alimentos Atuais (se houver)*:</label>
-    <input type="text" id="valor_alimentos_atual" placeholder="Ex: prestados informalmente no valor aproximado de R$ 300,00">
-</div>
-<div class="campo">
-    <label>Percentual Proposto sobre Rendimentos Líquidos (Empregado %)*:</label>
-    <input type="text" id="percentual_rendimentos_proposto" placeholder="Ex: 20">
-</div>
-<div class="campo">
-    <label>Percentual Proposto sobre Salário Mínimo (Desempregado %)*:</label>
-    <input type="text" id="percentual_salario_minimo_proposto" placeholder="Ex: 30">
-</div>
-<div class="campo">
-    <label>Valor Pretendido pela Parte Autora*:</label>
-    <input type="text" id="valor_pretendido_autor" placeholder="Ex: 50% do salário mínimo">
-</div>
-<div class="campo">
-    <label>Impacto/Comprometimento da Renda pelo Valor Pretendido*:</label>
-    <input type="text" id="comprometimento_renda" placeholder="Ex: mais de 60% dos parcos ganhos do Requerido">
-</div>
-<div class="campo">
-    <label>Qualificação / Renda da Parte Autora*:</label>
-    <input type="text" id="qualificacao_renda_autor" placeholder="Ex: exerce atividade remunerada formal como vendedora">
-</div>
-<div class="campo">
-    <label>Contribuições in Natura (já prestadas pelo pai)*:</label>
-    <textarea id="contribuicoes_in_natura" placeholder="Ex: compra de vestuários, fraldas e medicamentos de forma direta..."></textarea>
-</div>
-<div class="campo">
-    <label>Rebate sobre Despesas dos Filhos alegadas pela Autora*:</label>
-    <textarea id="rebate_despesas_autor" placeholder="Ex: não demonstrou nos autos os comprovantes das despesas extraordinárias alegadas..."></textarea>
-</div>
-
-<div class="section-title">Teses de Mérito e Pedidos *</div>
-
-<div class="campo">
-    <label>Tese Específica da Guarda*:</label>
-    <textarea id="tese_guarda_especifica" placeholder="Ex: o genitor reúne plenas condições de exercer a guarda compartilhada, mantendo o lar de referência materno..."></textarea>
-</div>
-<div class="campo">
-    <label>Fundamento para Estudo Social / Psicológico*:</label>
-    <textarea id="fundamento_estudo_social" placeholder="Ex: haver divergência grave quanto à rotina e ao bem-estar dos menores..."></textarea>
-</div>
-<div class="campo">
-    <label>Pedido de Alimentos Provisórios (Revisão)*:</label>
-    <input type="text" id="pedido_alimentos_provisorios" placeholder="Ex: a redução imediata dos alimentos provisórios fixados para 30% do salário mínimo">
-</div>
-<div class="campo">
-    <label>Pedido Específico quanto à Guarda*:</label>
-    <input type="text" id="pedido_guarda" placeholder="Ex: a manutenção da guarda compartilhada entre os genitores">
-</div>
-<div class="campo">
-    <label>Pedido Específico quanto à Convivência / Visitas*:</label>
-    <input type="text" id="pedido_visitas" placeholder="Ex: a fixação das visitas em finais de semana alternados com pernoite">
-</div>
-<div class="campo">
-    <label>Pedido quanto ao Estudo Social*:</label>
-    <input type="text" id="pedido_estudo_social" placeholder="Ex: a realização de avaliação psicológica e estudo social com as partes">
-</div>
-
-<div class="section-title">Assinatura</div>
-
-<div class="campo">
-    <label>Padawan autor da arte:</label>
-    <input type="text" id="nome_bad_boy" placeholder="Nome do estagiário(a)" oninput="atualizarBotao()">
-</div>
-
-<button type="button" id="btnGerar" onclick="gerarDocumentos()">Forjar Contestações</button>
+</body>
+</html>
